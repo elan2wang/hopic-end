@@ -1,0 +1,644 @@
+{
+    "slice_num": 12,
+    "topic_num": 3,
+    "slices_count": [
+        {
+            "counts": [
+                20,
+                38,
+                97
+            ]
+        },
+        {
+            "counts": [
+                68,
+                64,
+                43
+            ]
+        },
+        {
+            "counts": [
+                43,
+                23,
+                18
+            ]
+        },
+        {
+            "counts": [
+                39,
+                76,
+                17
+            ]
+        },
+        {
+            "counts": [
+                45,
+                33,
+                55
+            ]
+        },
+        {
+            "counts": [
+                20,
+                42,
+                15
+            ]
+        },
+        {
+            "counts": [
+                52,
+                7,
+                11
+            ]
+        },
+        {
+            "counts": [
+                42,
+                21,
+                111
+            ]
+        },
+        {
+            "counts": [
+                12,
+                35,
+                97
+            ]
+        },
+        {
+            "counts": [
+                27,
+                27,
+                76
+            ]
+        },
+        {
+            "counts": [
+                77,
+                74,
+                37
+            ]
+        },
+        {
+            "counts": [
+                25,
+                41,
+                24
+            ]
+        }
+    ],
+    "slices_topwords": [
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "people",
+                        "think",
+                        "news",
+                        "thing",
+                        "bbc",
+                        "google",
+                        "daily",
+                        "big",
+                        "cent",
+                        "tv"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "snowden",
+                        "hong",
+                        "kong",
+                        "china",
+                        "government",
+                        "edward",
+                        "jan",
+                        "chinese",
+                        "extradition",
+                        "country"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "nsa",
+                        "snowden",
+                        "government",
+                        "intelligence",
+                        "surveillance",
+                        "security",
+                        "datum",
+                        "program",
+                        "guardian",
+                        "agency"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "intelligence",
+                        "nsa",
+                        "government",
+                        "surveillance",
+                        "security",
+                        "agency",
+                        "information",
+                        "public",
+                        "datum",
+                        "eu"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "snowden",
+                        "country",
+                        "government",
+                        "kong",
+                        "hong",
+                        "asylum",
+                        "ecuador",
+                        "president",
+                        "request",
+                        "moscow"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "year",
+                        "people",
+                        "cent",
+                        "make",
+                        "time",
+                        "find",
+                        "police",
+                        "day",
+                        "thing",
+                        "life"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "nsa",
+                        "government",
+                        "surveillance",
+                        "court",
+                        "intelligence",
+                        "public",
+                        "record",
+                        "national",
+                        "program",
+                        "snowden"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "news",
+                        "change",
+                        "cent",
+                        "bbc",
+                        "make",
+                        "year",
+                        "show",
+                        "jan",
+                        "world",
+                        "day"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "snowden",
+                        "asylum",
+                        "russia",
+                        "rights",
+                        "human",
+                        "country",
+                        "airport",
+                        "offer",
+                        "government",
+                        "president"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "manning",
+                        "change",
+                        "world",
+                        "year",
+                        "people",
+                        "news",
+                        "life",
+                        "military",
+                        "man",
+                        "video"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "snowden",
+                        "nsa",
+                        "surveillance",
+                        "obama",
+                        "program",
+                        "intelligence",
+                        "house",
+                        "government",
+                        "court",
+                        "russia"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "gchq",
+                        "nsa",
+                        "agency",
+                        "company",
+                        "year",
+                        "uk",
+                        "internet",
+                        "government",
+                        "document",
+                        "work"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "nsa",
+                        "intelligence",
+                        "government",
+                        "surveillance",
+                        "snowden",
+                        "information",
+                        "agency",
+                        "security",
+                        "court",
+                        "program"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "party",
+                        "manning",
+                        "sentence",
+                        "wikileaks",
+                        "year",
+                        "preference",
+                        "council",
+                        "make",
+                        "assange",
+                        "military"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "miranda",
+                        "guardian",
+                        "police",
+                        "government",
+                        "journalist",
+                        "question",
+                        "terrorism",
+                        "act",
+                        "snowden",
+                        "greenwald"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "putin",
+                        "obama",
+                        "syria",
+                        "world",
+                        "year",
+                        "people",
+                        "president",
+                        "russia",
+                        "state",
+                        "military"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "nsa",
+                        "security",
+                        "government",
+                        "intelligence",
+                        "agency",
+                        "snowden",
+                        "datum",
+                        "company",
+                        "surveillance",
+                        "make"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "court",
+                        "film",
+                        "assange",
+                        "act",
+                        "party",
+                        "miranda",
+                        "guardian",
+                        "journalist",
+                        "record",
+                        "think"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "nsa",
+                        "datum",
+                        "security",
+                        "intelligence",
+                        "surveillance",
+                        "snowden",
+                        "agency",
+                        "government",
+                        "people",
+                        "make"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "week",
+                        "tv",
+                        "video",
+                        "advertising",
+                        "show",
+                        "york",
+                        "mail",
+                        "daily",
+                        "sex",
+                        "sep"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "guardian",
+                        "world",
+                        "drone",
+                        "year",
+                        "road",
+                        "london",
+                        "war",
+                        "silk",
+                        "cent",
+                        "book"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "bbc",
+                        "guardian",
+                        "press",
+                        "news",
+                        "journalism",
+                        "media",
+                        "jan",
+                        "world",
+                        "year",
+                        "story"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "government",
+                        "court",
+                        "nsa",
+                        "datum",
+                        "key",
+                        "company",
+                        "snowden",
+                        "service",
+                        "lavabit",
+                        "china"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "security",
+                        "guardian",
+                        "snowden",
+                        "intelligence",
+                        "public",
+                        "agency",
+                        "surveillance",
+                        "nsa",
+                        "government",
+                        "national"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "bbc",
+                        "trial",
+                        "press",
+                        "tv",
+                        "charter",
+                        "day",
+                        "daily",
+                        "twitter",
+                        "david",
+                        "reed"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "guardian",
+                        "government",
+                        "uk",
+                        "freedom",
+                        "state",
+                        "people",
+                        "human",
+                        "internet",
+                        "david",
+                        "journalism"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "nsa",
+                        "intelligence",
+                        "agency",
+                        "snowden",
+                        "security",
+                        "surveillance",
+                        "report",
+                        "committee",
+                        "spy",
+                        "datum"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "australia",
+                        "indonesia",
+                        "minister",
+                        "australian",
+                        "president",
+                        "abbott",
+                        "government",
+                        "spy",
+                        "intelligence",
+                        "indonesian"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "people",
+                        "media",
+                        "make",
+                        "journalism",
+                        "journalist",
+                        "world",
+                        "press",
+                        "year",
+                        "news",
+                        "public"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "nsa",
+                        "security",
+                        "snowden",
+                        "surveillance",
+                        "agency",
+                        "intelligence",
+                        "guardian",
+                        "datum",
+                        "government",
+                        "information"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "nsa",
+                        "surveillance",
+                        "datum",
+                        "snowden",
+                        "government",
+                        "agency",
+                        "intelligence",
+                        "report",
+                        "security",
+                        "phone"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "guardian",
+                        "intelligence",
+                        "security",
+                        "committee",
+                        "snowden",
+                        "agency",
+                        "government",
+                        "gchq",
+                        "australia",
+                        "public"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "year",
+                        "time",
+                        "people",
+                        "make",
+                        "russia",
+                        "putin",
+                        "snowden",
+                        "show",
+                        "photograph",
+                        "president"
+                    ]
+                }
+            ]
+        },
+        {
+            "topics": [
+                {
+                    "topwords": [
+                        "year",
+                        "day",
+                        "cent",
+                        "christmas",
+                        "story",
+                        "bbc",
+                        "show",
+                        "today",
+                        "man",
+                        "photograph"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "nsa",
+                        "snowden",
+                        "surveillance",
+                        "government",
+                        "security",
+                        "intelligence",
+                        "datum",
+                        "agency",
+                        "phone",
+                        "obama"
+                    ]
+                },
+                {
+                    "topwords": [
+                        "year",
+                        "world",
+                        "people",
+                        "make",
+                        "state",
+                        "big",
+                        "datum",
+                        "company",
+                        "think",
+                        "google"
+                    ]
+                }
+            ]
+        }
+    ]
+}

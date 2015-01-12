@@ -24,11 +24,12 @@ public class CrawlScheduler {
 	public static void start() throws IOException{
 		System.out.println("News Crawling Start....");
     	List<BaseCrawler> list = new ArrayList<BaseCrawler>();
-    	list.add(new GuardianCrawler(ConfigUtil.getValue("Guardian_Search_API"), "News/Guardian_Obamacare.dat", "Obamacare"));
+    	//list.add(new GuardianCrawler(ConfigUtil.getValue("Guardian_Search_API"), "News/Guardian_Obamacare.dat", "Obamacare"));
 		//list.add(new BBCCrawler(ConfigUtil.getValue("BBC_Search_URL"), "News/BBC.txt"));
     	//list.add(new BusinessInsiderCrawler(ConfigUtil.getValue("BusinessInsider_Search_URL"), "News/BusinessInsider.txt"));
     	//list.add(new ReutersCrawler(ConfigUtil.getValue("Reuters_Search_URL"), "News/Reuters.txt"));
-    	//list.add(new NYTimeCrawler(ConfigUtil.getValue("NYTime_Search_API"), "News/NYTime.txt"));
+    	//list.add(new NYTimeCrawler(ConfigUtil.getValue("NYTime_Search_API"), "News/NYTime_Obamacare.dat", "Obamacare"));
+    	list.add(new SinaCrawler(ConfigUtil.getValue("Sina_Search_URL"), "News/Sina.txt"));
     	
     	ThreadPoolExecutor threadPool = new ThreadPoolExecutor(10, 20, 60,  
                 TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(list.size()),  

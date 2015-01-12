@@ -3,10 +3,13 @@ package elan.nlp.models.dtm;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import elan.nlp.util.FileUtil;
 
 public class DtmModel {
 
@@ -112,15 +115,19 @@ public class DtmModel {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		DtmModel dtm = new DtmModel("News/dtm/bbc", "News/dtm/model_run", 0.01, 10, 7);
+		DtmModel dtm = new DtmModel("News/guardian/snowden/dtm", "News/guardian/snowden/dtm/topics_15/even", 0.01, 15, 12);
 		
 		dtm.readTheta();
 		dtm.readBetas();
 		
-		DtmResults res = new DtmResults(DtmDocuments.readTimeSlices("News/dtm/bbc-seq.dat"),
-				dtm.theta, dtm.beta_t);
+		DtmResults res = new DtmResults(DtmDocuments.readTimeSlices("News/guardian/snowden/dtm/snowden-seq-kmeans.dat"),
+				dtm.theta, dtm.beta_t, "News/guardian/snowden/dtm/snowden-dict.dat");
 		
-		res.outputDocsCount_perSlice_perTopic("News/dtm/docsCount_perSlice_perTopic.dat");
+		FileWriter fw = FileUtil.open("News/guardian/snowden/dtm/topics_15/even/res.json");
+		FileUtil.append(fw, res.toJson());
+		FileUtil.close(fw);
+		
+		res.outputDocsCount_perSlice_perTopic("News/guardian/snowden/dtm/topics_15/even/docs_distribution_kmeans.dat");
 		
 	}	
 }

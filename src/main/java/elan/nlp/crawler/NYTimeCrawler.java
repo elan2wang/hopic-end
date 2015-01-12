@@ -14,26 +14,28 @@ import org.slf4j.LoggerFactory;
 import elan.nlp.crawler.http.QueryParameters;
 import elan.nlp.crawler.http.Response;
 import elan.nlp.util.ConfigUtil;
+import elan.nlp.util.FileUtil;
 
 public class NYTimeCrawler extends BaseCrawler {
 
 	private static final Logger logger = LoggerFactory.getLogger(NYTimeCrawler.class);
 	private static final SimpleDateFormat dateF = new SimpleDateFormat("yyyyMMdd");
+	private static final Integer LIMITS_PER_SEC = 10;
+	private static final Integer LIMITS_PER_DAY = 10000;
 
-	private String query = "\"edward*snowden\"";
-	private String sort = "newest";
 
 	private String api_key;
+	private String sort = "newest";
 	private String begin_date;
 	private String end_date;
 
-	private Integer page = 0;
-	private Integer days = 204;
+	private Integer page = 1;
+	private Integer page_size = 10;
 
 	private QueryParameters params;
 
-	public NYTimeCrawler(String url, String path) {
-		super(url, path);
+	public NYTimeCrawler(String url, String path, String query) {
+		super(url, path, query);
 		api_key = ConfigUtil.getValue("NYTime_API_KEY");
 		params = new QueryParameters();
 		params.addParameter("q", query);
@@ -42,39 +44,38 @@ public class NYTimeCrawler extends BaseCrawler {
 	}
 
 	public void run() {
-		System.out.println("NYTime Crawler Start");
-		
-		// open output file
-		FileWriter fw = openOutputFile(path);
+		System.out.println("NYTime Crawler Starting...");
+		FileWriter fw = FileUtil.open(path);
+		String Delimiter = ConfigUtil.getValue("Delimiter");
 
-		// Crawl data within each day, total count are defined by days
+		// Crawl data within 100 day, total count are defined by days
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Timestamp(System.currentTimeMillis()));
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
 
-		Integer dayCount = 0;
 		Integer requestCount = 0;
-		while (dayCount < days) {
-			System.out.print("%");
-			dayCount++;
-
+		Boolean isDone = false;
+		// because NYTime API don't allow to retrieve data beyond page 100,
+		// we need to query within a small period time whose results won't exceed 1000
+		// here we just set 30 days
+		while (!isDone) {
+			
 			// calculate begin and end date
 			end_date = dateF.format(calendar.getTime());
-			calendar.add(Calendar.DAY_OF_YEAR, -1);
+			calendar.add(Calendar.DAY_OF_YEAR, -30);
 			begin_date = dateF.format(calendar.getTime());
-			// debug
-			logger.debug(begin_date + " - " + end_date);
-
-			page = 0;
-			Integer offset = 0;
-			Integer hits = 0;
-
 			// set parameters
 			params.addParameter("begin_date", begin_date);
 			params.addParameter("end_date", end_date);
-			params.addParameter("page", page);
-
+			
+			page = 1;
+			Integer offset = 0;
+			Integer hits = 0;
 			do {
+				System.out.print("N");
+				
 				// request for result
+				params.addParameter("page", page);
 				Response response = client.get(url, params.toArray());
 
 				// if the response is not 200, return
@@ -85,7 +86,7 @@ public class NYTimeCrawler extends BaseCrawler {
 
 				// API Limits: 10/Second, 10000/Day
 				requestCount ++;
-				if (requestCount % 10 == 0) {
+				if (requestCount % LIMITS_PER_SEC == 0) {
 					logger.debug("Need Sleep");
 					try {
 						Thread.sleep(1000);
@@ -93,7 +94,7 @@ public class NYTimeCrawler extends BaseCrawler {
 						e.printStackTrace();
 					}
 				}
-				if (requestCount > 10000) {
+				if (requestCount > LIMITS_PER_DAY) {
 					logger.info("Request Count Exceed API Limits(10000/Day)");
 					return;
 				}
@@ -105,7 +106,12 @@ public class NYTimeCrawler extends BaseCrawler {
 					JSONObject result = new JSONObject(response.asString()).getJSONObject("response");
 					offset = result.getJSONObject("meta").getInt("offset");
 					hits = result.getJSONObject("meta").getInt("hits");
-
+					// if no result, finished
+					if (hits == 0) {
+						isDone = true;
+						break;
+					}
+					
 					JSONArray docs = result.getJSONArray("docs");
 					for (int i=0; i<docs.length(); i++) {
 						JSONObject doc = docs.getJSONObject(i);
@@ -113,60 +119,21 @@ public class NYTimeCrawler extends BaseCrawler {
 						String title = headline.getString("main");
 						String url = doc.getString("web_url");
 						String date = doc.getString("pub_date");
-						
+
 						// append to output file
-						itemAppend(fw, date, title, url);
+						FileUtil.append(fw, date+Delimiter+title+Delimiter+url+"\n");
 					}
 				} catch (JSONException e) {
 					logger.error("parsing json string to json object failed");
 					e.printStackTrace();
 				}
 
-				// get next page
-				params.addParameter("page", page++);
-			} while(offset+10 < hits);
+				page = page + 1;
+			} while(offset+page_size < hits);
 		}
 
-		// close output file
-		closeOutputFile(fw);
+		FileUtil.close(fw);
 		System.out.println("NYTime Crawler Finished");
 	}
 
-	// Setters ===================================
-	public void setApi_key(String api_key) {
-		this.api_key = api_key;
-	}
-
-	public void setQuery(String q) {
-		this.query = q;
-	}
-
-	public void setBegin_date(String begin_date) {
-		this.begin_date = begin_date;
-	}
-
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	// getters ==================================
-	public String getApi_key() {
-		return api_key;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public String getBegin_date() {
-		return begin_date;
-	}
-
-	public String getEnd_date() {
-		return end_date;
-	}
 }

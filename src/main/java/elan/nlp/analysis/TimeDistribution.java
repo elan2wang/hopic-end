@@ -91,7 +91,7 @@ public class TimeDistribution {
 	}
 
 	public static void main(String args[]) {
-		TimeDistribution td = new TimeDistribution(News.Guardian, "News/Guardian_Edward_Snowden.dat", "News/Guardian.txt");
+		TimeDistribution td = new TimeDistribution(News.Guardian, "News/Guardian_Obamacare.dat", "News/Guardian.txt");
 		td.calc();
 		td.outputTimeDistribution();
 	}

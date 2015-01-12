@@ -10,6 +10,20 @@ import org.slf4j.LoggerFactory;
 public class FileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
+	public static FileWriter open(File file) {
+		if(file.exists()) {
+			logger.info(file.getName()+" already exists, automaticly deleted!");
+			file.delete();
+		}
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return fw;
+	}
+	
 	public static FileWriter open(String path) {
 		File file = new File(path);
 		if(file.exists()) {
@@ -18,7 +32,7 @@ public class FileUtil {
 		}
 		FileWriter fw = null;
 		try {
-			fw = new FileWriter(path);
+			fw = new FileWriter(file);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

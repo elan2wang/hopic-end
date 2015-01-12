@@ -15,7 +15,7 @@ import elan.nlp.util.WordsLoader;
 public abstract class Documents {
 
 	// words with frequency less than this value will be excluded
-	protected static int BASE_FREQUENCY = 2;
+	protected static int BASE_FREQUENCY = 5;
 
 	// vocabularies of the corpus with stop words and infrequent words excluded
 	// key-word(String), value-index(Integer)

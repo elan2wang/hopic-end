@@ -1,58 +1,75 @@
 package elan.nlp.models.lda;
 
-import elan.nlp.models.Results;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+
+import elan.nlp.util.FileUtil;
 
 public class LdaModel {
 
-	public static void main(String[] args) {
+	private int[][] documents;
+	private HashMap<String, Integer> dicts;
+
+	private LdaResults results;
+	
+	private Integer nslices;
+	private Integer ntopics;
+	private Integer top_k;
+
+	public LdaModel(int nslices, int ntopics, int top_k) {
+		this.nslices = nslices;
+		this.ntopics = ntopics;
+		this.top_k = top_k;
 		
-		LdaDocuments docs = new LdaDocuments("News/fulltext/US Government Shutdown", "stopwords.txt");
-		docs.exportDocuments("News/lda/lda_docs.txt");
-		docs.exportDictionary("News/lda/lda_dicts.txt");
-		docs.exportVocabularyFrequency("News/lda/lda_counts.txt");
+		dicts = LdaDocuments.readDict("News/guardian/snowden/lda/snowden-dict.dat");
+		results = new LdaResults(this.nslices, this.ntopics, this.top_k);
+	}
 
-		int[][] documents = docs.asArrays();
+	public void run(String seqFilePath, Integer t) {
+		// documents
+		documents = LdaDocuments.readDocs("News/guardian/snowden/lda/snowden-docs.dat", seqFilePath, t);
 
-		// vocabulary
-		int V = docs.getDictionary().size();
-		System.out.println(V+"");
+		// vocabulary size
+		int V = dicts.size();
+
 		// # topics
-		int K = 10;
+		int K = ntopics;
+
 		// good values alpha = 2, beta = .5
 		double alpha = 2;
 		double beta = .5;
 
 		System.out.println("Latent Dirichlet Allocation using Gibbs Sampling.");
 
-		LdaGibbsSampler lda = new LdaGibbsSampler(documents, V);
-		lda.configure(1000, 200, 10, 3);
-		lda.gibbs(K, alpha, beta);
+		LdaGibbsSampler gibbs = new LdaGibbsSampler(documents, V);
+		gibbs.configure(1000, 200, 10, 3);
+		gibbs.gibbs(K, alpha, beta);
 
-		double[][] theta = lda.getTheta();
-		double[][] phi = lda.getPhi();
+		double[][] theta = gibbs.getTheta();
+		double[][] phi = gibbs.getPhi();
 
-		System.out.println();
-		System.out.println();
-		System.out.println("Document--Topic Associations, Theta[d][k] (alpha="
-				+ alpha + ")");
-		System.out.print("d\\k\t");
-		for (int m = 0; m < theta[0].length; m++) {
-			System.out.print("   " + m % 10 + "    ");
+		// generate result
+		results.generate(t, theta, phi, dicts);
+		results.output(theta, "News/guardian/snowden/lda/topics_15/kmeans/theta_"+t+".dat");
+		results.output(phi, "News/guardian/snowden/lda/topics_15/kmeans/phi_"+t+".dat");
+		
+	}
+
+	public static void main(String[] args) throws IOException {
+		LdaModel lda = new LdaModel(12, 15, 10);
+
+		for (int t=1; t<=lda.nslices; t++) {
+			System.out.println("\n%%%%%%%%%%%%%%%% run lda at slice "+t+" %%%%%%%%%%%%%%%%");
+			
+			lda.run("News/guardian/snowden/lda/snowden-seq-kmeans.dat", t);
 		}
-		System.out.println();
-		for (int m = 0; m < theta.length; m++) {
-			System.out.print(m + "\t");
-			for (int k = 0; k < theta[m].length; k++) {
-				// System.out.print(theta[m][k] + " ");
-				System.out.print(LdaGibbsSampler.shadeDouble(theta[m][k], 1) + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-
-		Results res = new Results();
-		res.topWords(phi, docs.getDictionary(), 15);
-		System.out.println();
-
+		
+		FileWriter fw = FileUtil.open("News/guardian/snowden/lda/topics_15/kmeans/res.json");
+		FileUtil.append(fw, lda.results.toJson());
+		FileUtil.close(fw);
+		
+		lda.results.outputDocsCount_perSlice_perTopic("News/guardian/snowden/lda/topics_15/kmeans/docs_distribution.dat");
+		
 	}
 }

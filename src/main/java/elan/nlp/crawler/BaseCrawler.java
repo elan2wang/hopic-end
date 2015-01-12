@@ -86,7 +86,8 @@ public abstract class BaseCrawler implements Runnable {
 			if (delimiter == null || delimiter.equals("")){
 				delimiter = ConfigUtil.getValue("Delimiter");
 			}
-			fw.append(date+delimiter+title+delimiter+url+"\n");
+			fw.append(date).append(delimiter).append(title)
+			.append(delimiter).append(url).append("\n");
 			fw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

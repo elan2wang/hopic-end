@@ -19,34 +19,12 @@ public class GuardianCrawler extends BaseCrawler{
 	private static final Integer LIMITS_PER_DAY = 5000;
 
 	private String api_key;
-	private String begin_date;
-	private String end_date;
 	private String sort = "newest";
-
+	
 	private Integer page = 1;
 	private Integer page_size = 50;
 
 	private QueryParameters params;
-
-	public GuardianCrawler() {
-		super();
-		api_key = ConfigUtil.getValue("Guardian_API_KEY");
-		params = new QueryParameters();
-		params.addParameter("q", query);
-		params.addParameter("api-key", api_key);
-		params.addParameter("sort", sort);
-		params.addParameter("page-size", page_size);
-	}
-
-	public GuardianCrawler(String url, String path) {
-		super(url, path);
-		api_key = ConfigUtil.getValue("Guardian_API_KEY");
-		params = new QueryParameters();
-		params.addParameter("q", query);
-		params.addParameter("api-key", api_key);
-		params.addParameter("sort", sort);
-		params.addParameter("page-size", page_size);
-	}
 
 	public GuardianCrawler(String url, String path, String query) {
 		super(url, path, query);
@@ -68,6 +46,7 @@ public class GuardianCrawler extends BaseCrawler{
 		Integer startIndex = 0;
 		
 		do {
+			System.out.print("G");
 			// request for result
 			params.addParameter("page", page);
 			Response response = client.get(url, params.toArray());
@@ -120,53 +99,5 @@ public class GuardianCrawler extends BaseCrawler{
 		FileUtil.close(fw);
 		System.out.println("Guardian Crawler Finished...");
 	}
-
-	// ~~~~~ Getters and Setters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	public String getApi_key() {
-		return api_key;
-	}
-
-	public void setApi_key(String api_key) {
-		this.api_key = api_key;
-	}
-
-	public String getBegin_date() {
-		return begin_date;
-	}
-
-	public void setBegin_date(String begin_date) {
-		this.begin_date = begin_date;
-	}
-
-	public String getEnd_date() {
-		return end_date;
-	}
-
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
-	}
-
-	public String getSort() {
-		return sort;
-	}
-
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
-
-	public Integer getPage() {
-		return page;
-	}
-
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-
-	public Integer getPage_size() {
-		return page_size;
-	}
-
-	public void setPage_size(Integer page_size) {
-		this.page_size = page_size;
-	}	
+	
 }

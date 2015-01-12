@@ -14,7 +14,7 @@ public class App
 	{
 		logger.debug("start app");
 
-		//CrawlScheduler.start();
-		ExtractScheduler.start();
+		CrawlScheduler.start();
+		//ExtractScheduler.start();
 	}
 }

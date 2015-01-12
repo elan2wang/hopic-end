@@ -82,11 +82,8 @@ public class HttpClient implements Serializable {
 			
 			/* generate CrawlResponse */
 			HttpEntity entity = response.getEntity();
-			try {
 				res = new Response(statusLine.getStatusCode(), EntityUtils.toByteArray(entity));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 		} catch (ClientProtocolException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {

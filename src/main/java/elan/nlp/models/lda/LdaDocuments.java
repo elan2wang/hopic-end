@@ -34,6 +34,7 @@ public class LdaDocuments extends Documents {
 			if (!docFile.getName().endsWith(".txt")) continue;
 			Document doc = new Document(docFile.getAbsolutePath());
 			documents.add(doc);
+			if (doc.words.size() == 0) System.out.println(docFile.getName() + " size " + doc.words.size());
 		}
 		System.out.println("Total words count: "+vocabulary_count.size()+"\nTotal useful words count: "+dictionary.size());
 	}
@@ -59,8 +60,8 @@ public class LdaDocuments extends Documents {
 			}
 			if (sb.length() > 0) {
 				sb.deleteCharAt(sb.length()-1);
-				sb.append("\n");
 			}
+			sb.append("\n");
 			FileUtil.append(fw, sb.toString());
 		}
 		FileUtil.close(fw);
@@ -95,7 +96,7 @@ public class LdaDocuments extends Documents {
 					// tokenization
 					StringTokenizer tokenizer = new StringTokenizer(line);
 					while(tokenizer.hasMoreElements()) {
-						String token = tokenizer.nextToken();
+						String token = tokenizer.nextToken().toLowerCase();
 						if (!stopwords.contains(token)  && token.length() > 1) {
 							// index and count vocabulary
 							if (!vocabulary_count.containsKey(token)) {
@@ -110,7 +111,7 @@ public class LdaDocuments extends Documents {
 							}
 							words.add(token);
 						}
-					}	
+					}
 				}
 				// close file reader
 				reader.close();
@@ -122,17 +123,74 @@ public class LdaDocuments extends Documents {
 		}
 	}
 
-	public static int[][] readDocs(String filename) {
+	public static int[][] readDocs(String docsPath, String seqPath, Integer t) {
 		int[][] docs = null;
+		BufferedReader docReader = null;
+		BufferedReader seqReader = null;
+		
+		try {
+			docReader = new BufferedReader(new FileReader(new File(docsPath)));
+			seqReader = new BufferedReader(new FileReader(new File(seqPath)));
+			
+			// read time slices
+			String line = seqReader.readLine();
+			int max_t = Integer.valueOf(line);
+			if (max_t < t) {
+				System.out.print("time slice number exceed the max value");
+				return null;
+			}
+			int[] slices = new int[max_t];
+			int i=0;
+			while((line = seqReader.readLine()) != null) {
+				if (!line.equals("")) {
+					slices[i++] = Integer.valueOf(line);
+				}
+			}
+			
+			// determine start line
+			int start = 0;
+			for(i=0; i<t-1; i++) {
+				start += slices[i];
+			}
+			
+			// read docs
+			i=0;
+			int j=0;
+			docs = new int[slices[t-1]][];
+			System.out.println("this slice has "+slices[t-1]+" docs, and start line is "+start);
+			while((line = docReader.readLine()) != null) {
+				if (i >= start && i < start+slices[t-1]) {
+					//System.out.println("i="+i+", j="+j);
+					String[] nums = line.split(" ");
+					docs[j] = new int[nums.length];
+					for (int k=0; k<nums.length; k++) {
+						docs[j][k] = Integer.valueOf(nums[k]);
+					}
+					j++;
+				}
+				i++;
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (seqReader != null) seqReader.close();
+				if (docReader != null) docReader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return docs;
 	}
 	
 	public static void main(String[] args) {
-
-		LdaDocuments docs = new LdaDocuments("News/fulltext/all", "stopwords.txt");
-		docs.exportDocuments("News/lda_docs.txt");
-		docs.exportDictionary("News/lda_dicts.txt");
+		LdaDocuments docs = new LdaDocuments("News/docs/parse/", "stopwords.dat");
+		docs.exportDocuments("News/docs.dat");
+		docs.exportDictionary("News/dict.dat");
 
 	}
 }

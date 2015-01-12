@@ -10,13 +10,16 @@ public class DtmResults extends Results {
 	private double[][] theta;
 	// beta_t[s][t][w]: proportion of word [w] with topic [t] in time slice [s]
 	private double[][][] beta_t;
+	
+	private String dictname;
 
-	public DtmResults(int[] slices, double[][] theta, double[][][] beta_t) {
+	public DtmResults(int[] slices, double[][] theta, double[][][] beta_t, String dictname) {
 		super();
 		this.theta = theta;
 		this.beta_t = beta_t;
 		this.slices = slices;
-
+		this.dictname = dictname;
+		
 		ntopics = theta[0].length;
 		nslices = slices.length;
 		docsCount_perSlice_perTopic = new int[nslices][ntopics];
@@ -28,7 +31,7 @@ public class DtmResults extends Results {
 	private void init() {
 		
 		for (int i=0; i<this.nslices; i++) {
-			topWords_perSlice_perTopic[i] = topWords(beta_t[i], Documents.readDict("News/dtm/bbc-dict.dat"), top_k);
+			topWords_perSlice_perTopic[i] = topWords(beta_t[i], Documents.readDict(dictname), top_k);
 		}
 
 		int s = 0;

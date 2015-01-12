@@ -114,7 +114,7 @@ public class DtmDocuments extends Documents{
 					// tokenization
 					StringTokenizer tokenizer = new StringTokenizer(line);
 					while(tokenizer.hasMoreElements()) {
-						String token = tokenizer.nextToken();
+						String token = tokenizer.nextToken().toLowerCase();
 						//System.out.println(token);
 						if (!stopwords.contains(token) && token.length() > 1) {
 							// index and count vocabulary
@@ -149,8 +149,8 @@ public class DtmDocuments extends Documents{
 	}
 
 	public static void main(String[] args) {
-		DtmDocuments docs = new DtmDocuments("News/fulltext/all", "stopwords.txt");
-		docs.exportDictionary("News/dtm_dict.dat");
-		docs.exportDocuments("News/dtm_docs.dat");
+		DtmDocuments docs = new DtmDocuments("News/guardian/snowden/fulltext/parse", "stopwords.dat");
+		docs.exportDictionary("News/guardian/snowden/dtm/snowden-dict.dat");
+		docs.exportDocuments("News/guardian/snowden/dtm/snowden-mult.dat");
 	}
 }

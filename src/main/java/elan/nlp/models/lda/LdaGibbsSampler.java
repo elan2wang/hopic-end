@@ -270,6 +270,7 @@ public class LdaGibbsSampler {
             p[k] = (nw[documents[m][n]][k] + beta) / (nwsum[k] + V * beta)
                 * (nd[m][k] + alpha) / (ndsum[m] + K * alpha);
         }
+        
         // cumulate multinomial parameters
         for (int k = 1; k < p.length; k++) {
             p[k] += p[k - 1];
